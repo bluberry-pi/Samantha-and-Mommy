@@ -4,43 +4,68 @@ public class TeddyPickup : MonoBehaviour
 {
     public SpriteRenderer Teddy;
     public GameObject TeddyOnHand;
+    public GameObject TeddyOnPc;
 
-    public Collider2D clickCollider;
+    public Collider2D bedZone;
+    public Collider2D desktopZone;
 
-    bool playerNear = false;
-    bool holdingTeddy = false;
+    bool playerNearBed;
+    bool playerNearDesktop;
+    bool holdingTeddy;
+
+    Collider2D playerCol;
+
+    void Start()
+    {
+        playerCol = GetComponent<Collider2D>();
+    }
 
     void Update()
     {
-        if (!holdingTeddy && playerNear && Input.GetMouseButtonDown(0))
-        {
-            Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        playerNearBed = bedZone.IsTouching(playerCol);
+        playerNearDesktop = desktopZone.IsTouching(playerCol);
 
-            if (clickCollider.OverlapPoint(mouseWorld))
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // PICK TEDDY FROM BED
+            if (!holdingTeddy && playerNearBed && Teddy.enabled)
             {
-                Teddy.enabled = false;          // hide sprite
+                Debug.Log("ACTION: Pick Teddy From Bed");
+                Teddy.enabled = false;
                 TeddyOnHand.SetActive(true);
+                TeddyOnPc.SetActive(false);
+                holdingTeddy = true;
+            }
+
+            //DROP TEDDY ON BED
+            else if (holdingTeddy && playerNearBed && !Teddy.enabled)
+            {
+                Debug.Log("ACTION: Drop Teddy On Bed");
+                Teddy.enabled = true;
+                TeddyOnHand.SetActive(false);
+                TeddyOnPc.SetActive(false);
+                holdingTeddy = false;
+            }
+
+            //PUT TEDDY ON PC
+            else if (holdingTeddy && playerNearDesktop && !TeddyOnPc.activeSelf)
+            {
+                Debug.Log("ACTION: Put Teddy On PC");
+                Teddy.enabled = false;
+                TeddyOnHand.SetActive(false);
+                TeddyOnPc.SetActive(true);
+                holdingTeddy = false;
+            }
+
+            //TAKE TEDDY FROM PC
+            else if (!holdingTeddy && playerNearDesktop && TeddyOnPc.activeSelf)
+            {
+                Debug.Log("ACTION: Take Teddy From PC");
+                Teddy.enabled = false;
+                TeddyOnHand.SetActive(true);
+                TeddyOnPc.SetActive(false);
                 holdingTeddy = true;
             }
         }
-
-        if (holdingTeddy && playerNear && Input.GetKeyDown(KeyCode.E))
-        {
-            Teddy.enabled = true;               // show sprite
-            TeddyOnHand.SetActive(false);
-            holdingTeddy = false;
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-            playerNear = true;
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-            playerNear = false;
     }
 }
