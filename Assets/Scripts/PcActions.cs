@@ -1,17 +1,17 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PcActions : MonoBehaviour
 {
     public GameObject loadingScreen;
     public GameObject updateScreen;
     public float waitAfterLoad = 3f;
-    public GameObject proceedButton;
     public GameObject Updating;
     public GameObject paintArea;
     public Transform paintParent;
-
     public Transform uiParent;
+    Button proceedBtn;
 
     GameObject updateInstance;
     GameObject loadingInstance;
@@ -21,7 +21,7 @@ public class PcActions : MonoBehaviour
 
     void Update()
     {
-        // If loading screen disappears → kill everything
+        // If loading window gets closed manually → cancel everything
         if (!cancelled && loadingInstance == null)
         {
             CancelEverything();
@@ -31,22 +31,10 @@ public class PcActions : MonoBehaviour
 
         float z = updateInstance.transform.eulerAngles.z;
 
-        if (IsNear(z, 0f))
-        {
-            Debug.Log("0 degrees");
-        }
-        else if (IsNear(z, 270f))
-        {
-            Debug.Log("-90 degrees");
-        }
-        else if (IsNear(z, 180f))
-        {
-            Debug.Log("-180 degrees");
-        }
-        else if (IsNear(z, 90f))
-        {
-            Debug.Log("-270 degrees");
-        }
+        if (IsNear(z, 0f)) Debug.Log("0 degrees");
+        else if (IsNear(z, 270f)) Debug.Log("-90 degrees");
+        else if (IsNear(z, 180f)) Debug.Log("-180 degrees");
+        else if (IsNear(z, 90f)) Debug.Log("-270 degrees");
     }
 
     public void OnGamePress()
@@ -58,26 +46,35 @@ public class PcActions : MonoBehaviour
     public void onPaintPress()
     {
         paintWindow = Instantiate(paintArea, paintParent);
+        WindowLayerManager.Instance.BringToFront(paintWindow);
     }
 
     IEnumerator LoadSequence()
     {
         loadingInstance = Instantiate(loadingScreen, uiParent);
+        WindowLayerManager.Instance.BringToFront(loadingInstance);
 
         yield return new WaitForSeconds(waitAfterLoad);
 
         if (cancelled) yield break;
 
         updateInstance = Instantiate(updateScreen, uiParent);
-        proceedButton.SetActive(true);
+        WindowLayerManager.Instance.BringToFront(updateInstance);
+
+        proceedBtn = updateInstance.GetComponentInChildren<Button>();
+
+        proceedBtn.onClick.RemoveAllListeners();
+        proceedBtn.onClick.AddListener(OnProceedPress);
     }
+
 
     public void OnProceedPress()
     {
         if (cancelled) return;
 
-        proceedButton.SetActive(false);
-        Instantiate(Updating, uiParent);
+        GameObject u = Instantiate(Updating, uiParent);
+        WindowLayerManager.Instance.BringToFront(u);
+
         Destroy(updateInstance);
     }
 
@@ -88,8 +85,6 @@ public class PcActions : MonoBehaviour
 
         if (updateInstance) Destroy(updateInstance);
         if (loadingInstance) Destroy(loadingInstance);
-
-        proceedButton.SetActive(false);
     }
 
     bool IsNear(float a, float b)

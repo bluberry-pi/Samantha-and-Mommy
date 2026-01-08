@@ -382,6 +382,7 @@ GameObject:
   - component: {fileID: 1710092837718766001}
   - component: {fileID: 3731464715911704145}
   - component: {fileID: 3568671413597396602}
+  - component: {fileID: 1439948093694047036}
   m_Layer: 0
   m_Name: Updating
   m_TagString: UpdateWIndow
@@ -578,6 +579,18 @@ MonoBehaviour:
   minShakeSpeed: 2
   buildSpeed: 1.3
   decaySpeed: 0.8
+--- !u!114 &1439948093694047036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6513424489819196256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46165c1125e06f4690de35bd55b4063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7494529893642991575
 GameObject:
   m_ObjectHideFlags: 0
