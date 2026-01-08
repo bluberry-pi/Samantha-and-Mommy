@@ -3951,6 +3951,7 @@ GameObject:
   - component: {fileID: 852831847}
   - component: {fileID: 852831848}
   - component: {fileID: 852831849}
+  - component: {fileID: 852831850}
   m_Layer: 0
   m_Name: Bed
   m_TagString: Bed
@@ -4146,6 +4147,21 @@ PolygonCollider2D:
       - {x: -1.545, y: 3.925}
       - {x: -6.075, y: 2.235}
   m_UseDelaunayMesh: 0
+--- !u!114 &852831850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852831844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0d5584f7e954541bfa8b74ceab7e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sleepAnimation: {fileID: 8879115712746139407, guid: a5f4e42653cae34448598631dede516b, type: 3}
+  wakeupAnimation: {fileID: 7621426384438171070, guid: 79816975851fe5b49aed0b943297fe31, type: 3}
+  player: {fileID: 1787931700}
 --- !u!1 &858369428
 GameObject:
   m_ObjectHideFlags: 0
@@ -6542,7 +6558,6 @@ GameObject:
   - component: {fileID: 1787931703}
   - component: {fileID: 1787931704}
   - component: {fileID: 1787931706}
-  - component: {fileID: 1787931707}
   - component: {fileID: 1787931708}
   m_Layer: 0
   m_Name: Player
@@ -6681,20 +6696,6 @@ MonoBehaviour:
   pcLight: {fileID: 1410307855}
   bedZone: {fileID: 1930527022}
   desktopZone: {fileID: 509375153}
---- !u!114 &1787931707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787931700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef0d5584f7e954541bfa8b74ceab7e52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sleepAnimation: {fileID: 8879115712746139407, guid: a5f4e42653cae34448598631dede516b, type: 3}
-  player: {fileID: 1787931700}
 --- !u!70 &1787931708
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
