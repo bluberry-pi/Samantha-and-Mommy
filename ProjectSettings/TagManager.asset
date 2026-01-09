@@ -12,6 +12,7 @@ TagManager:
   - Teddy
   - Mommy
   - Bed
+  - MiniGameLogic
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - 
   - Bed
   - 
-  - 
+  - Obstacle
   - 
   - 
   - 
