@@ -14,6 +14,7 @@ public class MomSlider : MonoBehaviour
     public float minShakeIntensity = 0.5f;
     public float shakeIncreaseRate = 5f;
     public float shakeDecayRate = 0.2f;
+    public bool momAngry = false;
     float currentSliderValue = 0f;
     float lastY;
     float lastVelocity;
@@ -37,7 +38,6 @@ public class MomSlider : MonoBehaviour
                 lastVelocity = 0f;
                 Debug.Log("Found shaky window: " + shakyWindow.name);
                 
-                // Also find WindowRotation component (child or parent)
                 if (windowRotation == null)
                 {
                     // Try to find in children first
@@ -71,6 +71,7 @@ public class MomSlider : MonoBehaviour
         
         momSlider.value = currentSliderValue;
         if (momSlider.value >= maxSliderValue)
+            momAngry = true;
             Debug.Log("Mom is coming...");
     }
     void CheckWalkingCondition()

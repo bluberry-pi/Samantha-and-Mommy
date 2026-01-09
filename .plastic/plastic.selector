@@ -1,4 +1,0 @@
-repository "BrainlessJam/Samantha-and-Mommy@13469217710167@cloud"
-  path "/"
-    br "/main"
-    co "/main"

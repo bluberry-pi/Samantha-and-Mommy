@@ -7157,7 +7157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   momSlider: {fileID: 360484983}
   playerMovement: {fileID: 1787931704}
-  increaseRate: 80
+  increaseRate: 60
   decreaseRate: 30
   maxSliderValue: 100
   shakyWindow: {fileID: 0}
@@ -7165,6 +7165,7 @@ MonoBehaviour:
   minShakeIntensity: 3
   shakeIncreaseRate: 30
   shakeDecayRate: 0.2
+  momAngry: 0
   windowRotation: {fileID: 0}
 --- !u!1 &1761276947
 GameObject:
@@ -8179,6 +8180,7 @@ MonoBehaviour:
   speed: 5
   speedAfter: 20
   stopAfter: 0.3
+  momSlider: {fileID: 1761246047}
 --- !u!1 &2091717354
 GameObject:
   m_ObjectHideFlags: 0
