@@ -11,6 +11,8 @@ public class PcActions : MonoBehaviour
     public GameObject paintArea;
     public Transform paintParent;
     public Transform uiParent;
+    public GameObject passwordWindow;
+
     Button proceedBtn;
 
     GameObject updateInstance;
@@ -18,14 +20,26 @@ public class PcActions : MonoBehaviour
     GameObject paintWindow;
 
     bool cancelled = false;
+    bool passwordSpawned = false;
+
+    void OnEnable()
+    {
+        DownloadManager.OnDownloadComplete += SpawnPasswordWindow;
+
+        // If download already finished earlier, spawn immediately
+        if (DownloadManager.DownloadFinished)
+            SpawnPasswordWindow();
+    }
+
+    void OnDisable()
+    {
+        DownloadManager.OnDownloadComplete -= SpawnPasswordWindow;
+    }
 
     void Update()
     {
-        // If loading window gets closed manually → cancel everything
         if (!cancelled && loadingInstance == null)
-        {
             CancelEverything();
-        }
 
         if (!updateInstance) return;
 
@@ -55,18 +69,15 @@ public class PcActions : MonoBehaviour
         WindowLayerManager.Instance.BringToFront(loadingInstance);
 
         yield return new WaitForSeconds(waitAfterLoad);
-
         if (cancelled) yield break;
 
         updateInstance = Instantiate(updateScreen, uiParent);
         WindowLayerManager.Instance.BringToFront(updateInstance);
 
         proceedBtn = updateInstance.GetComponentInChildren<Button>();
-
         proceedBtn.onClick.RemoveAllListeners();
         proceedBtn.onClick.AddListener(OnProceedPress);
     }
-
 
     public void OnProceedPress()
     {
@@ -76,6 +87,17 @@ public class PcActions : MonoBehaviour
         WindowLayerManager.Instance.BringToFront(u);
 
         Destroy(updateInstance);
+    }
+
+    void SpawnPasswordWindow()
+    {
+        if (passwordSpawned) return;      // only spawn once
+        passwordSpawned = true;
+
+        if (!passwordWindow || !uiParent) return;
+
+        GameObject pw = Instantiate(passwordWindow, uiParent);
+        WindowLayerManager.Instance.BringToFront(pw);
     }
 
     void CancelEverything()

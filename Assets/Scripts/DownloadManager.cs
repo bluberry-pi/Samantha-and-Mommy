@@ -1,41 +1,58 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class DownloadManager : MonoBehaviour
 {
     public Slider downloadSlider;
     public TextMeshProUGUI speedText;
 
-    [Header("Download Speeds")]
     public float firstHalfSpeed = 5f;
     public float secondHalfSpeed = 0.5f;
 
     [HideInInspector] public float shakeBoost = 0f;
 
     float currentProgress = 0f;
+    bool completed = false;
+
+    public static event Action OnDownloadComplete;
+    public static bool DownloadFinished = false;
+
+    void OnEnable()
+    {
+        // Reset static state safely when scene loads
+        DownloadFinished = false;
+        completed = false;
+        currentProgress = 0f;
+
+        if (downloadSlider)
+            downloadSlider.value = 0f;
+    }
 
     void Update()
     {
+        if (completed) return;
+
         if (currentProgress >= 1f)
         {
+            completed = true;
+            DownloadFinished = true;
+
             currentProgress = 1f;
-            downloadSlider.value = 1f;
-            speedText.text = "Download Complete";
+            if (downloadSlider) downloadSlider.value = 1f;
+            if (speedText) speedText.text = "Download Complete";
+
+            Debug.Log("🔥 DOWNLOAD COMPLETE EVENT FIRED");
+            OnDownloadComplete?.Invoke();
             return;
         }
 
-        float currentSpeed;
-
-        if (currentProgress < 0.10f)
-            currentSpeed = firstHalfSpeed;
-        else
-            currentSpeed = secondHalfSpeed;
-
+        float currentSpeed = (currentProgress < 0.10f) ? firstHalfSpeed : secondHalfSpeed;
         float finalSpeed = currentSpeed + shakeBoost;
-        currentProgress += finalSpeed * Time.deltaTime / 100f;
 
-        downloadSlider.value = currentProgress;
-        speedText.text = finalSpeed.ToString("F2") + " kb/s";
+        currentProgress += finalSpeed * Time.deltaTime / 100f;
+        if (downloadSlider) downloadSlider.value = currentProgress;
+        if (speedText) speedText.text = finalSpeed.ToString("F2") + " kb/s";
     }
 }

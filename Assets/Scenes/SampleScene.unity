@@ -5077,6 +5077,7 @@ MonoBehaviour:
   paintArea: {fileID: 5084215537045033997, guid: e3a941aac08c61e4a8c6601666b9293f, type: 3}
   paintParent: {fileID: 709099462}
   uiParent: {fileID: 607045292}
+  passwordWindow: {fileID: 6211873957575025012, guid: 3fbf4ab707f02754a9fcb955f04053da, type: 3}
 --- !u!1 &1215560901
 GameObject:
   m_ObjectHideFlags: 0
