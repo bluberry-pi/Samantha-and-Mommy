@@ -5,41 +5,80 @@ public class MommyScript : MonoBehaviour
 {
     public Rigidbody2D mommy;
     public float speed = 5f;
-    public float speedAfter = 10f;
-    public float stopAfter = 1f;
+    public float rushSpeed = 10f;
+    public float intimidateTime = 3f;
+
     public MomSlider momSlider;
+    public EyesScript eyes;
+    public SleepAnimTrig sleep;
 
-    Vector2 direction = Vector2.right;
-    bool isMoving = false;
+    Vector2 startPos;
+    Vector2 dir = Vector2.right;
 
-    bool lastAngryState = false;
+    bool attacking;
+    bool returning;
+    bool hardWaiting;   // ⛔ absolute wait lock
+
+    void Start()
+    {
+        startPos = mommy.position;
+    }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O))
-            StartMove();
-
-        if (momSlider.momAngry && !lastAngryState)
-            StartMove();
-
-        lastAngryState = momSlider.momAngry;
-    }
-    void StartMove()
-    {
-        mommy.linearVelocity = Vector2.right * speed;
+        if (momSlider.momAngry && !attacking && !returning && !hardWaiting)
+            StartCoroutine(Attack());
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    IEnumerator Attack()
     {
+        attacking = true;
+        mommy.linearVelocity = dir * speed;
+        yield return null;
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (!attacking) return;
         StopAllCoroutines();
-        StartCoroutine(RushAndStop());
+        StartCoroutine(Rush());
     }
 
-    IEnumerator RushAndStop()
+    IEnumerator Rush()
     {
-        mommy.linearVelocity = direction * speedAfter;
-        yield return new WaitForSeconds(stopAfter);
+        attacking = false;
+        hardWaiting = true;
+
+        mommy.linearVelocity = dir * rushSpeed;
+        yield return new WaitForSeconds(intimidateTime);
+
         mommy.linearVelocity = Vector2.zero;
-        isMoving = false;
+
+        // ⛔ HARD WAIT — nothing can bypass this
+        yield return new WaitForSeconds(3f);
+
+        hardWaiting = false;
+
+        // NOW check if player behaved
+        if (sleep.sleeping && eyes.leftEye.activeSelf && eyes.rightEye.activeSelf)
+            StartCoroutine(Return());
+        else
+            StartCoroutine(Attack());   // keep threatening
+    }
+
+    IEnumerator Return()
+    {
+        returning = true;
+        momSlider.momAngry = false;
+
+        while (Vector2.Distance(mommy.position, startPos) > 0.05f)
+        {
+            mommy.linearVelocity = (startPos - mommy.position).normalized * speed;
+            yield return null;
+        }
+
+        mommy.position = startPos;
+        mommy.linearVelocity = Vector2.zero;
+        returning = false;
     }
 }

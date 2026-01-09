@@ -1,117 +1,99 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class MomSlider : MonoBehaviour
 {
     public Slider momSlider;
     public PlayerMovement playerMovement;
     public WindowRotation windowRotation;
-    [Header("Slider Settings")]
+
     public float increaseRate = 0.5f;
     public float decreaseRate = 1f;
     public float maxSliderValue = 100f;
-    [Header("Shake Detection")]
+
     public Transform shakyWindow;
     public string shakyWindowTag = "UpdateWindow";
     public float minShakeIntensity = 0.5f;
     public float shakeIncreaseRate = 5f;
     public float shakeDecayRate = 0.2f;
-    [Header("Random Mom Brain")]
+
     public MomRandom momRandom;
     public bool momAngry = false;
-    float currentSliderValue;
-    float lastY, lastVelocity;
-    bool isCurrentlyShaking;
-    
+
+    float current;
+    float lastY;
+    float lastVel;
+    bool shaking;
+
     void Start()
     {
         momSlider.maxValue = maxSliderValue;
         momSlider.value = 0f;
     }
-    
+
     void Update()
     {
-        FindWindowIfNeeded();
-        HandleMomRandom();
-        momSlider.value = currentSliderValue;
-        
-        if (momSlider.value >= maxSliderValue)
+        FindWindow();
+
+        if (momRandom && momRandom.CurrentState == MomRandom.MomState.Filling)
         {
-            momAngry = true;
-            Debug.Log("[MomSlider] Mom is coming...");
-        }
-    }
-    
-    void HandleMomRandom()
-    {
-        if (momRandom != null && momRandom.CurrentState == MomRandom.MomState.Filling)
-        {
-            currentSliderValue += momRandom.randomFillSpeed * Time.deltaTime;
-            currentSliderValue = Mathf.Clamp(currentSliderValue, 0f, maxSliderValue);
-            
-            if (currentSliderValue >= maxSliderValue)
+            current += momRandom.randomFillSpeed * Time.deltaTime;
+            if (current >= maxSliderValue)
             {
+                current = maxSliderValue;
                 momRandom.NotifyReachedMax();
-                Debug.Log("[MomSlider] Reached MAX, notified MomRandom");
             }
-            return;
         }
-        
-        if (momRandom != null && momRandom.CurrentState == MomRandom.MomState.Draining)
+        else if (momRandom && momRandom.CurrentState == MomRandom.MomState.Draining)
         {
-            currentSliderValue -= momRandom.randomDrainSpeed * Time.deltaTime;
-            currentSliderValue = Mathf.Clamp(currentSliderValue, 0f, maxSliderValue);
-            
-            if (currentSliderValue <= 0f)
+            current -= momRandom.randomDrainSpeed * Time.deltaTime;
+            if (current <= 0f)
             {
+                current = 0f;
                 momRandom.NotifyReachedZero();
-                Debug.Log("[MomSlider] Reached ZERO, notified MomRandom");
             }
-            return;
         }
-        
-        HandleWalking();
-        HandleShaking();
-        currentSliderValue = Mathf.Clamp(currentSliderValue, 0f, maxSliderValue);
-    }
-    
-    void HandleWalking()
-    {
-        bool moving = playerMovement.GetMovement().magnitude > 0.01f;
-        if (moving)
-            currentSliderValue += increaseRate * Time.deltaTime;
-        else if (!isCurrentlyShaking)
-            currentSliderValue -= decreaseRate * Time.deltaTime;
         else
-            currentSliderValue -= shakeDecayRate * Time.deltaTime;
+        {
+            HandleWalk();
+            HandleShake();
+        }
+
+        current = Mathf.Clamp(current, 0f, maxSliderValue);
+        momSlider.value = current;
+        momAngry = current >= maxSliderValue;
     }
-    
-    void HandleShaking()
+
+    void HandleWalk()
     {
-        if (windowRotation == null || !windowRotation.vertical || shakyWindow == null) return;
+        if (playerMovement.GetMovement().magnitude > 0.01f)
+            current += increaseRate * Time.deltaTime;
+        else if (!shaking)
+            current -= decreaseRate * Time.deltaTime;
+        else
+            current -= shakeDecayRate * Time.deltaTime;
+    }
+
+    void HandleShake()
+    {
+        if (!windowRotation || !windowRotation.vertical || !shakyWindow) return;
+
         float y = shakyWindow.position.y;
         float vel = (y - lastY) / Time.deltaTime;
-        float delta = Mathf.Abs(vel - lastVelocity);
+        float delta = Mathf.Abs(vel - lastVel);
         lastY = y;
-        lastVelocity = vel;
-        if (delta > minShakeIntensity)
-        {
-            isCurrentlyShaking = true;
-            currentSliderValue += delta * shakeIncreaseRate * Time.deltaTime;
-        }
-        else
-        {
-            isCurrentlyShaking = false;
-        }
+        lastVel = vel;
+
+        shaking = delta > minShakeIntensity;
+
+        if (shaking)
+            current += delta * shakeIncreaseRate * Time.deltaTime;
     }
-    
-    void FindWindowIfNeeded()
+
+    void FindWindow()
     {
-        if (shakyWindow != null) return;
+        if (shakyWindow) return;
         GameObject w = GameObject.FindGameObjectWithTag(shakyWindowTag);
-        if (w)
-        {
-            shakyWindow = w.transform;
-            lastY = shakyWindow.position.y;
-        }
+        if (w) shakyWindow = w.transform;
     }
 }

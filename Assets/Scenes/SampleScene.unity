@@ -4586,6 +4586,7 @@ MonoBehaviour:
   wakeupAnimation: {fileID: 7621426384438171070, guid: 79816975851fe5b49aed0b943297fe31, type: 3}
   player: {fileID: 1787931700}
   fToInteract: {fileID: 2091717354}
+  sleeping: 0
 --- !u!1 &858369428
 GameObject:
   m_ObjectHideFlags: 0
@@ -8180,9 +8181,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mommy: {fileID: 1990838651}
   speed: 5
-  speedAfter: 20
-  stopAfter: 0.3
+  rushSpeed: 15
+  intimidateTime: 0.7
   momSlider: {fileID: 1761246047}
+  eyes: {fileID: 466189253}
+  sleep: {fileID: 852831850}
 --- !u!114 &1990838653
 MonoBehaviour:
   m_ObjectHideFlags: 0
