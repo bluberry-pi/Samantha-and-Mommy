@@ -7157,6 +7157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   momSlider: {fileID: 360484983}
   playerMovement: {fileID: 1787931704}
+  windowRotation: {fileID: 0}
   increaseRate: 60
   decreaseRate: 30
   maxSliderValue: 100
@@ -7165,8 +7166,8 @@ MonoBehaviour:
   minShakeIntensity: 3
   shakeIncreaseRate: 30
   shakeDecayRate: 0.2
+  momRandom: {fileID: 1990838653}
   momAngry: 0
-  windowRotation: {fileID: 0}
 --- !u!1 &1761276947
 GameObject:
   m_ObjectHideFlags: 0
@@ -8024,6 +8025,7 @@ GameObject:
   - component: {fileID: 1990838651}
   - component: {fileID: 1990838650}
   - component: {fileID: 1990838652}
+  - component: {fileID: 1990838653}
   m_Layer: 7
   m_Name: Mommy
   m_TagString: Mommy
@@ -8181,6 +8183,23 @@ MonoBehaviour:
   speedAfter: 20
   stopAfter: 0.3
   momSlider: {fileID: 1761246047}
+--- !u!114 &1990838653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990838647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6533189ded27e14f891d7cdca3a72f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enabledRandom: 1
+  minCalmTime: 10
+  maxCalmTime: 30
+  randomFillSpeed: 10
+  randomDrainSpeed: 1
 --- !u!1 &2091717354
 GameObject:
   m_ObjectHideFlags: 0
