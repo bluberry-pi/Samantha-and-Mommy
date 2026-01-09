@@ -60,7 +60,7 @@ public class MommyScript : MonoBehaviour
         if (sleep.sleeping && eyes.leftEye.activeSelf && eyes.rightEye.activeSelf)
             StartCoroutine(Return());
         else
-            StartCoroutine(Attack()); 
+            Debug.Log("GameOver");
     }
 
     IEnumerator Return()
