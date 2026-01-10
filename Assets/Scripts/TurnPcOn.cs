@@ -6,6 +6,7 @@ public class TurnPcOn : MonoBehaviour
     public GameObject PcLight;
     public GameObject PcScreen;
     public static bool pcPowered = false;
+    public static bool PcIsOn = false;
 
 
     bool enteredOnce = false;
@@ -16,6 +17,11 @@ public class TurnPcOn : MonoBehaviour
         PcLight.SetActive(false);
         PcScreen.SetActive(false);
         OnButton.SetActive(false);
+    }
+
+    void Update()
+    {
+        PcIsOn = PcLight.activeSelf;
     }
 
     void OnTriggerEnter2D(Collider2D collision)

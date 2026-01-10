@@ -4,10 +4,8 @@ public class EyesScript : MonoBehaviour
 {
     public GameObject leftEye;
     public GameObject rightEye;
-
     bool leftClosed = false;
     bool rightClosed = false;
-
     void Start()
     {
         leftEye.SetActive(false);

@@ -7,11 +7,12 @@ public class MommyScript : MonoBehaviour
     public float speed = 5f;
     public float rushSpeed = 10f;
     public float intimidateTime = 3f;
-    public float waitTime = 2f; 
+    public float waitTime = 2f;
 
     public MomSlider momSlider;
     public EyesScript eyes;
     public SleepAnimTrig sleep;
+    public TurnPcOn pcLight;
 
     Vector2 startPos;
     Vector2 dir = Vector2.right;
@@ -41,7 +42,7 @@ public class MommyScript : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!attacking) return;
-        StopAllCoroutines();
+        //StopAllCoroutines();
         StartCoroutine(Rush());
     }
 
@@ -54,13 +55,16 @@ public class MommyScript : MonoBehaviour
         yield return new WaitForSeconds(intimidateTime);
 
         mommy.linearVelocity = Vector2.zero;
-        yield return new WaitForSeconds(waitTime);
+        bool eyesClosed = eyes.leftEye.activeSelf && eyes.rightEye.activeSelf;
+        bool pcIsOff = !TurnPcOn.PcIsOn;
 
-        hardWaiting = false;
-        if (sleep.sleeping && eyes.leftEye.activeSelf && eyes.rightEye.activeSelf)
+        if (sleep.sleeping && eyesClosed && pcIsOff)
             StartCoroutine(Return());
         else
             Debug.Log("GameOver");
+
+        yield return new WaitForSeconds(waitTime);
+        hardWaiting = false;
     }
 
     IEnumerator Return()
