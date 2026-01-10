@@ -13,6 +13,7 @@ public class MommyScript : MonoBehaviour
     public EyesScript eyes;
     public SleepAnimTrig sleep;
     public TurnPcOn pcLight;
+    public GameOverConditions brain;
 
     Vector2 startPos;
     Vector2 dir = Vector2.right;
@@ -55,16 +56,16 @@ public class MommyScript : MonoBehaviour
         yield return new WaitForSeconds(intimidateTime);
 
         mommy.linearVelocity = Vector2.zero;
-        bool eyesClosed = eyes.leftEye.activeSelf && eyes.rightEye.activeSelf;
-        bool pcIsOff = !TurnPcOn.PcIsOn;
-
-        if (sleep.sleeping && eyesClosed && pcIsOff)
+        if (brain.PlayerIsSafe())
+        {
+            yield return new WaitForSeconds(waitTime);
+            hardWaiting = false;
             StartCoroutine(Return());
+        }
         else
-            Debug.Log("GameOver");
-
-        yield return new WaitForSeconds(waitTime);
-        hardWaiting = false;
+        {
+            Debug.Log("GAME OVER");
+        }
     }
 
     IEnumerator Return()
