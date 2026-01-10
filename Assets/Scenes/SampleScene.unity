@@ -7455,8 +7455,8 @@ MonoBehaviour:
   momSlider: {fileID: 360484983}
   playerMovement: {fileID: 1787931704}
   windowRotation: {fileID: 0}
-  increaseRate: 60
-  decreaseRate: 30
+  increaseRate: 20
+  decreaseRate: 50
   maxSliderValue: 100
   shakyWindow: {fileID: 0}
   shakyWindowTag: UpdateWIndow
@@ -7514,6 +7514,7 @@ GameObject:
   - component: {fileID: 1787931704}
   - component: {fileID: 1787931706}
   - component: {fileID: 1787931708}
+  - component: {fileID: 1787931709}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -7565,12 +7566,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c7015c890fc0ebe4f9bd76e64ae5b2d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73f1cf651316c3949a0e5d9311381390, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.647059, y: 5.647059}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -7633,6 +7634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   body: {fileID: 1787931703}
+  animator: {fileID: 1787931709}
 --- !u!114 &1787931706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7689,6 +7691,28 @@ CapsuleCollider2D:
   m_Offset: {x: -0.1942234, y: 0.37930608}
   m_Size: {x: 1.5055139, y: 2.6988745}
   m_Direction: 0
+--- !u!95 &1787931709
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787931700}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d5e1b0996b2464240bf56d9311c66c4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1807442015
 GameObject:
   m_ObjectHideFlags: 0
@@ -8616,7 +8640,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2146378298
 Transform:
   m_ObjectHideFlags: 0
