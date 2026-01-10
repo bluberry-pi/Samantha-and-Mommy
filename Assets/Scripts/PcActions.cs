@@ -17,12 +17,14 @@ public class PcActions : MonoBehaviour
     public GameObject MiniGameButton;
 
     public GameObject miniGame;
+    public GameObject PictureFolder;
     Button proceedBtn;
 
     GameObject updateInstance;
     GameObject loadingInstance;
     GameObject paintWindow;
     GameObject currentMiniGame;
+    GameObject folderWindow;
 
     bool cancelled = false;
     bool passwordSpawned = false;
@@ -116,6 +118,12 @@ public class PcActions : MonoBehaviour
     {
         if (currentMiniGame != null) return;
         currentMiniGame = Instantiate(miniGame);
+    }
+
+    public void OnFolderPress()
+    {
+        if (folderWindow != null) return;
+        folderWindow = Instantiate(PictureFolder);
     }
 
     void CancelEverything()
