@@ -13,11 +13,16 @@ public class PcActions : MonoBehaviour
     public Transform uiParent;
     public GameObject passwordWindow;
 
+    public GameObject GameButton;
+    public GameObject MiniGameButton;
+
+    public GameObject miniGame;
     Button proceedBtn;
 
     GameObject updateInstance;
     GameObject loadingInstance;
     GameObject paintWindow;
+    GameObject currentMiniGame;
 
     bool cancelled = false;
     bool passwordSpawned = false;
@@ -25,8 +30,8 @@ public class PcActions : MonoBehaviour
     void OnEnable()
     {
         DownloadManager.OnDownloadComplete += SpawnPasswordWindow;
+        PasswordChecker.OnPasswordCorrect += OnPasswordCorrect;
 
-        // If download already finished earlier, spawn immediately
         if (DownloadManager.DownloadFinished)
             SpawnPasswordWindow();
     }
@@ -34,6 +39,7 @@ public class PcActions : MonoBehaviour
     void OnDisable()
     {
         DownloadManager.OnDownloadComplete -= SpawnPasswordWindow;
+        PasswordChecker.OnPasswordCorrect -= OnPasswordCorrect;
     }
 
     void Update()
@@ -91,13 +97,25 @@ public class PcActions : MonoBehaviour
 
     void SpawnPasswordWindow()
     {
-        if (passwordSpawned) return;      // only spawn once
+        if (passwordSpawned) return;
         passwordSpawned = true;
 
         if (!passwordWindow || !uiParent) return;
 
         GameObject pw = Instantiate(passwordWindow, uiParent);
         WindowLayerManager.Instance.BringToFront(pw);
+    }
+
+    void OnPasswordCorrect()
+    {
+        if (GameButton) GameButton.SetActive(false);
+        if (MiniGameButton) MiniGameButton.SetActive(true);
+    }
+
+    public void OnMiniGamePress()
+    {
+        if (currentMiniGame != null) return;
+        currentMiniGame = Instantiate(miniGame);
     }
 
     void CancelEverything()

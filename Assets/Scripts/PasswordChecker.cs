@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class PasswordChecker : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class PasswordChecker : MonoBehaviour
 
     [Header("Correct Password")]
     public string correctPassword = "hello123";
+
+    public static event Action OnPasswordCorrect;
 
     public void CheckPassword()
     {
@@ -16,13 +19,13 @@ public class PasswordChecker : MonoBehaviour
         {
             Debug.Log("ACCESS GRANTED");
 
+            // 🔔 Notify PCActions
+            OnPasswordCorrect?.Invoke();
+
             // Destroy EVERYTHING tagged GameStuff
             GameObject[] stuff = GameObject.FindGameObjectsWithTag("GameStuff");
-
             foreach (GameObject g in stuff)
-            {
                 Destroy(g);
-            }
         }
         else
         {
