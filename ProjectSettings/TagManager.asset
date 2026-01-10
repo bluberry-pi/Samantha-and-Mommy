@@ -13,6 +13,8 @@ TagManager:
   - Mommy
   - Bed
   - MiniGameLogic
+  - MiniGameOver
+  - MiniGame
   layers:
   - Default
   - TransparentFX

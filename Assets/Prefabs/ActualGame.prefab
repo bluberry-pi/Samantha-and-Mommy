@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 6405523120729538034}
   - component: {fileID: 1362167993228501008}
   m_Layer: 12
-  m_Name: Square
+  m_Name: MiniPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
+  ObstacleSpawn: {fileID: 6898387749598954547}
 --- !u!50 &1362167993228501008
 Rigidbody2D:
   serializedVersion: 5
@@ -918,6 +919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Obstacle: {fileID: 4190038160973801221, guid: 52234bc440356484ea20c73dcf5dcdab, type: 3}
+  obstacleParent: {fileID: 4623699751514496088}
   spawnRate: 1
   widthOffset: 2.8
 --- !u!1 &7098776988674871149
@@ -931,7 +933,7 @@ GameObject:
   - component: {fileID: 2235929739187418572}
   m_Layer: 0
   m_Name: ActualGame
-  m_TagString: Untagged
+  m_TagString: MiniGame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -944,7 +946,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7098776988674871149}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
