@@ -22,6 +22,8 @@ public class MommyScript : MonoBehaviour
     public SleepAnimTrig sleep;
     public TurnPcOn pcLight;
     public GameOverConditions brain;
+    public float returnSpeed = 7f;
+
 
     Vector2 startPos;
     Vector2 lastKnownPlayerPos;
@@ -87,7 +89,7 @@ public class MommyScript : MonoBehaviour
 
         while (Vector2.Distance(mommy.position, startPos) > 0.05f)
         {
-            mommy.linearVelocity = (startPos - mommy.position).normalized * speed;
+            mommy.linearVelocity = (startPos - mommy.position).normalized * returnSpeed;
             yield return null;
         }
 

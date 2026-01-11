@@ -11,26 +11,14 @@ public class SoundFXManager : MonoBehaviour
             instance = this;
         }
     }
-    public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform, float volume)
+    public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform, float volume, float pitch = 1f)
     {
-        //spawn in gameObject;
         AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity);
-
-        //assign the audioClip
         audioSource.clip = audioClip;
-
-        //add volume
         audioSource.volume = volume;
-
-        //play sound
+        audioSource.pitch = pitch;
         audioSource.Play();
-
-        //get length of the sound FX clip
-        float clipLength = audioSource.clip.length;
-
-        //destroy the clip after it is done playing
-        Destroy(audioSource.gameObject, clipLength);
-
+        Destroy(audioSource.gameObject, audioSource.clip.length / pitch);
     }
 
     public IEnumerator PlayAndWait(AudioClip clip, Transform spawnTransform, float volume)

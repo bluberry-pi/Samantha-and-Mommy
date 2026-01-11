@@ -8739,9 +8739,12 @@ MonoBehaviour:
   maxSliderValue: 100
   shakyWindow: {fileID: 0}
   shakyWindowTag: UpdateWIndow
-  minShakeIntensity: 0.1
+  minShakeIntensity: 0.02
   shakeIncreaseRate: 40
   shakeDecayRate: 0.2
+  dragUpClip: {fileID: 8300000, guid: 0c2e42781d2b8c143acd1941a6844e25, type: 3}
+  dragDownClip: {fileID: 8300000, guid: 29e645fcb19208643b3219608612ad85, type: 3}
+  soundCooldown: 0.08
   momRandom: {fileID: 1990838653}
   momAngry: 0
 --- !u!1 &1761276947
@@ -9898,9 +9901,9 @@ SceneRoots:
   - {fileID: 509375151}
   - {fileID: 1574148559}
   - {fileID: 1289915995}
+  - {fileID: 1761246046}
   - {fileID: 2146378298}
   - {fileID: 1561196370}
-  - {fileID: 1761246046}
   - {fileID: 1930527017}
   - {fileID: 201237533}
   - {fileID: 1990838649}

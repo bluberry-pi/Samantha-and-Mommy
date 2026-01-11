@@ -5,30 +5,34 @@ public class MomSlider : MonoBehaviour
 {
     public Slider momSlider;
     public PlayerMovement playerMovement;
-    [Header("Walk Fill")]
+
     public float increaseRate = 0.5f;
     public float decreaseRate = 1f;
     public float maxSliderValue = 100f;
 
-    [Header("Shake Detection")]
     public Transform shakyWindow;
     public string shakyWindowTag = "UpdateWindow";
-    public float minShakeIntensity = 0.5f;
+    public float minShakeIntensity = 0.06f;
     public float shakeIncreaseRate = 5f;
     public float shakeDecayRate = 0.2f;
+
+    public AudioClip dragUpClip;
+    public AudioClip dragDownClip;
+    public float soundCooldown = 0.08f;
 
     public MomRandom momRandom;
     public bool momAngry = false;
 
     float current;
     float lastY;
+    float lastVel;
+    float soundTimer;
     bool shaking;
 
     void Start()
     {
         momSlider.maxValue = maxSliderValue;
         momSlider.value = 0f;
-
         FindWindow();
         if (shakyWindow)
             lastY = shakyWindow.position.y;
@@ -77,8 +81,6 @@ public class MomSlider : MonoBehaviour
             current -= shakeDecayRate * Time.deltaTime;
     }
 
-    float lastVel;
-
     void HandleShake()
     {
         if (!shakyWindow) return;
@@ -93,10 +95,25 @@ public class MomSlider : MonoBehaviour
         if (accel > minShakeIntensity)
         {
             current += accel * shakeIncreaseRate;
-            Debug.Log("REAL SHAKE: " + accel);
+            shaking = true;
+
+            soundTimer -= Time.deltaTime;
+            float soundPower = accel * 2.5f;
+
+            if (soundPower > 0.02f && soundTimer <= 0f)
+            {
+                AudioClip clip = vel > 0 ? dragUpClip : dragDownClip;
+                float volume = Mathf.Clamp01(Mathf.Pow(soundPower, 0.4f));
+                float pitch = Mathf.Lerp(0.9f, 1.6f, Mathf.Clamp01(soundPower));
+                SoundFXManager.instance.PlaySoundFXClip(clip, shakyWindow, volume, pitch);
+                soundTimer = Mathf.Lerp(0.09f, 0.01f, Mathf.Clamp01(soundPower * 1.5f));
+            }
+        }
+        else
+        {
+            shaking = false;
         }
     }
-
 
     void FindWindow()
     {
