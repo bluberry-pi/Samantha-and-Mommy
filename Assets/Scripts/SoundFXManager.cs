@@ -3,7 +3,6 @@ using UnityEngine.Rendering;
 
 public class SoundFXManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static SoundFXManager instance;
     [SerializeField] private AudioSource soundFXObject;
     private void Awake()
@@ -20,6 +19,9 @@ public class SoundFXManager : MonoBehaviour
         AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity);
 
         //assign the audioClip
+        audioSource.clip = audioClip;
+
+        //add volume
         audioSource.volume = volume;
 
         //play sound
