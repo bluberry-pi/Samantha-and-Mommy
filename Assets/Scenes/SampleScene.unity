@@ -9551,11 +9551,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audibleStartDistance: 25
-  fullVolumeDistance: 3.4
+  fullVolumeDistance: 6
   player: {fileID: 1787931702}
   maxThreatDistance: 10
   mommy: {fileID: 1990838654}
-  speed: 5
+  speed: 4
   rushSpeed: 15
   intimidateTime: 0.7
   waitTime: 2

@@ -4,12 +4,12 @@ using UnityEngine;
 public class MommyScript : MonoBehaviour
 {
     [Header("Threat Audio Distances")]
-    public float audibleStartDistance = 20f;   // when mom music starts faint
-    public float fullVolumeDistance = 6f;      // when mom is max loud
+    public float audibleStartDistance = 20f;
+    public float fullVolumeDistance = 6f;
 
     [Header("Threat Audio")]
     public Transform player;
-    public float maxThreatDistance = 10f;
+    //public float maxThreatDistance = 10f;
 
     public Rigidbody2D mommy;
     public float speed = 5f;
@@ -110,9 +110,13 @@ public class MommyScript : MonoBehaviour
 
         float dist = Vector2.Distance(mommy.position, lastKnownPlayerPos);
 
-        float proximity01 = Mathf.InverseLerp(audibleStartDistance, fullVolumeDistance, dist);
-        // NO extra invert here
+        float raw = Mathf.InverseLerp(audibleStartDistance, fullVolumeDistance, dist);
+
+        float lowCurve = Mathf.Pow(raw, 1.6f);
+        float spike = Mathf.Pow(raw, 5.0f);
+        float proximity01 = Mathf.Lerp(lowCurve, spike, raw);
 
         AudioManager.Instance.SetMomThreat(proximity01, true);
     }
+
 }
