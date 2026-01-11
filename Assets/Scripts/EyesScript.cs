@@ -4,8 +4,12 @@ public class EyesScript : MonoBehaviour
 {
     public GameObject leftEye;
     public GameObject rightEye;
+
+    public GameObject blockWhileExists;
+
     bool leftClosed = false;
     bool rightClosed = false;
+
     void Start()
     {
         leftEye.SetActive(false);
@@ -14,6 +18,9 @@ public class EyesScript : MonoBehaviour
 
     void Update()
     {
+        if (blockWhileExists != null)
+            return;
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             leftClosed = !leftClosed;
