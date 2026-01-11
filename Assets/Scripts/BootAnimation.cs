@@ -6,6 +6,7 @@ public class BootAnimation : MonoBehaviour
     public GameObject Boot;
     public GameObject Canvas;
     [SerializeField] private AudioClip bootSound;
+    [SerializeField] private float volume = 0.5f;
 
     public void DisableFadeAnimation()
     {
@@ -13,7 +14,7 @@ public class BootAnimation : MonoBehaviour
     }
     public void DisableBootAnimation()
     {
-        SoundFXManager.instance.PlaySoundFXClip(bootSound, transform, 1f);
+        SoundFXManager.instance.PlaySoundFXClip(bootSound, transform, volume);
         Boot.SetActive(false);
         Canvas.SetActive(true);
     }

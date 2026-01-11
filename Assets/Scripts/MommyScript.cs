@@ -36,6 +36,7 @@ public class MommyScript : MonoBehaviour
     IEnumerator Attack()
     {
         attacking = true;
+        AudioManager.Instance.PlayMomMusic();
         mommy.linearVelocity = dir * speed;
         yield return null;
     }
@@ -60,6 +61,7 @@ public class MommyScript : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
             hardWaiting = false;
+            AudioManager.Instance.StopMomMusic();
             StartCoroutine(Return());
         }
         else
