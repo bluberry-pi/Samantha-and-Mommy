@@ -710,7 +710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &233902369
 Transform:
   m_ObjectHideFlags: 0
@@ -1090,6 +1090,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373091501}
   m_CullTransparentMesh: 1
+--- !u!1001 &394604839
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 607045292}
+    m_Modifications:
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3126949428626402586, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6513424489819196256, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+      propertyPath: m_Name
+      value: Updating
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d364dc51480e8014cbc641561c64a892, type: 3}
 --- !u!1 &414729000
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,6 +2143,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1008650198}
+  - {fileID: 1735337992}
   m_Father: {fileID: 2146378298}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &608563992
@@ -8111,7 +8173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1561196367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8550,6 +8612,11 @@ CapsuleCollider2D:
   m_Offset: {x: -0.19315815, y: 0.44862187}
   m_Size: {x: 1.7394543, y: 2.9731658}
   m_Direction: 0
+--- !u!4 &1735337992 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 638423140335605020, guid: d364dc51480e8014cbc641561c64a892, type: 3}
+  m_PrefabInstance: {fileID: 394604839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1761246042
 GameObject:
   m_ObjectHideFlags: 0
@@ -8667,14 +8734,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   momSlider: {fileID: 360484983}
   playerMovement: {fileID: 1787931704}
-  windowRotation: {fileID: 0}
   increaseRate: 50
   decreaseRate: 50
   maxSliderValue: 100
   shakyWindow: {fileID: 0}
   shakyWindowTag: UpdateWIndow
-  minShakeIntensity: 3
-  shakeIncreaseRate: 30
+  minShakeIntensity: 0.1
+  shakeIncreaseRate: 40
   shakeDecayRate: 0.2
   momRandom: {fileID: 1990838653}
   momAngry: 0
@@ -9553,7 +9619,6 @@ MonoBehaviour:
   audibleStartDistance: 25
   fullVolumeDistance: 6
   player: {fileID: 1787931702}
-  maxThreatDistance: 10
   mommy: {fileID: 1990838654}
   speed: 4
   rushSpeed: 15
@@ -9770,7 +9835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2146378298
 Transform:
   m_ObjectHideFlags: 0

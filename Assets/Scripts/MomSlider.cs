@@ -5,12 +5,12 @@ public class MomSlider : MonoBehaviour
 {
     public Slider momSlider;
     public PlayerMovement playerMovement;
-    public WindowRotation windowRotation;
-
+    [Header("Walk Fill")]
     public float increaseRate = 0.5f;
     public float decreaseRate = 1f;
     public float maxSliderValue = 100f;
 
+    [Header("Shake Detection")]
     public Transform shakyWindow;
     public string shakyWindowTag = "UpdateWindow";
     public float minShakeIntensity = 0.5f;
@@ -22,13 +22,16 @@ public class MomSlider : MonoBehaviour
 
     float current;
     float lastY;
-    float lastVel;
     bool shaking;
 
     void Start()
     {
         momSlider.maxValue = maxSliderValue;
         momSlider.value = 0f;
+
+        FindWindow();
+        if (shakyWindow)
+            lastY = shakyWindow.position.y;
     }
 
     void Update()
@@ -55,8 +58,8 @@ public class MomSlider : MonoBehaviour
         }
         else
         {
-            HandleWalk();
             HandleShake();
+            HandleWalk();
         }
 
         current = Mathf.Clamp(current, 0f, maxSliderValue);
@@ -74,26 +77,36 @@ public class MomSlider : MonoBehaviour
             current -= shakeDecayRate * Time.deltaTime;
     }
 
+    float lastVel;
+
     void HandleShake()
     {
-        if (!windowRotation || !windowRotation.vertical || !shakyWindow) return;
+        if (!shakyWindow) return;
 
         float y = shakyWindow.position.y;
-        float vel = (y - lastY) / Time.deltaTime;
-        float delta = Mathf.Abs(vel - lastVel);
+        float vel = y - lastY;
+        float accel = Mathf.Abs(vel - lastVel);
+
         lastY = y;
         lastVel = vel;
 
-        shaking = delta > minShakeIntensity;
-
-        if (shaking)
-            current += delta * shakeIncreaseRate * Time.deltaTime;
+        if (accel > minShakeIntensity)
+        {
+            current += accel * shakeIncreaseRate;
+            Debug.Log("REAL SHAKE: " + accel);
+        }
     }
+
 
     void FindWindow()
     {
         if (shakyWindow) return;
+
         GameObject w = GameObject.FindGameObjectWithTag(shakyWindowTag);
-        if (w) shakyWindow = w.transform;
+        if (w)
+        {
+            shakyWindow = w.transform;
+            lastY = shakyWindow.position.y;
+        }
     }
 }
