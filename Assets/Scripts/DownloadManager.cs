@@ -13,6 +13,10 @@ public class DownloadManager : MonoBehaviour
 
     [HideInInspector] public float shakeBoost = 0f;
 
+    [Header("Eye Closed Bonus")]
+    public float eyeClosedBonus = 5f;     // how much speed eyes give
+    [HideInInspector] public float eyeBonus = 0f;
+
     float currentProgress = 0f;
     bool completed = false;
 
@@ -40,7 +44,9 @@ public class DownloadManager : MonoBehaviour
         }
 
         float currentSpeed = (currentProgress < 0.10f) ? firstHalfSpeed : secondHalfSpeed;
-        float finalSpeed = currentSpeed + shakeBoost;
+
+        // 👇 real final speed (shake + eye bonus)
+        float finalSpeed = currentSpeed + shakeBoost + eyeBonus;
 
         currentProgress += finalSpeed * Time.deltaTime / 100f;
 

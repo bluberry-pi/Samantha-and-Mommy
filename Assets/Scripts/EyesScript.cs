@@ -1,88 +1,96 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EyesScript : MonoBehaviour
 {
-    public GameObject leftEye;
-    public GameObject rightEye;
+    public Image leftEye;
+    public Image rightEye;
 
     public GameObject blockWhileExists;
+    public GameObject peekObject;
+
+    DownloadManager downloadManager;
 
     bool leftClosed = false;
     bool rightClosed = false;
 
-    SpriteRenderer leftSR;
-    SpriteRenderer rightSR;
-    public GameObject peekObject;
-
+    public bool AreEyesClosed()   // 🔥 clean public API
+    {
+        return leftClosed && rightClosed;
+    }
 
     void Start()
     {
-        leftEye.SetActive(false);
-        rightEye.SetActive(false);
-
-        leftSR = leftEye.GetComponent<SpriteRenderer>();
-        rightSR = rightEye.GetComponent<SpriteRenderer>();
+        leftEye.gameObject.SetActive(false);
+        rightEye.gameObject.SetActive(false);
     }
 
     void Update()
     {
+        if (!downloadManager)
+        {
+            GameObject win = GameObject.FindGameObjectWithTag("UpdateWIndow");
+            if (win)
+                downloadManager = win.GetComponentInChildren<DownloadManager>();
+        }
+
         if (blockWhileExists && blockWhileExists.activeInHierarchy)
             return;
 
         if (Input.GetKeyDown(KeyCode.C))
         {
             leftClosed = !leftClosed;
-            leftEye.SetActive(leftClosed);
+            leftEye.gameObject.SetActive(leftClosed);
         }
 
         if (Input.GetKeyDown(KeyCode.V))
         {
             rightClosed = !rightClosed;
-            rightEye.SetActive(rightClosed);
+            rightEye.gameObject.SetActive(rightClosed);
         }
 
         Peek();
+        UpdateEyeBonus();
     }
-
 
     void Peek()
     {
-        // Only allow peeking when BOTH eyes are closed
-        if (!leftClosed || !rightClosed)
+        if (!AreEyesClosed())
         {
             SetEyeOpacity(1f);
             if (peekObject) peekObject.SetActive(false);
             return;
         }
 
-        // Both eyes closed = show peek object
         if (peekObject) peekObject.SetActive(true);
 
         if (Input.GetKey(KeyCode.P))
-        {
             SetEyeOpacity(0.7f);
-        }
         else
-        {
             SetEyeOpacity(1f);
-        }
     }
 
+    void UpdateEyeBonus()
+    {
+        if (!downloadManager) return;
+
+        downloadManager.eyeBonus = AreEyesClosed() ? downloadManager.eyeClosedBonus : 0f;
+    }
 
     void SetEyeOpacity(float alpha)
     {
-        if (leftSR)
+        if (leftEye)
         {
-            Color c = leftSR.color;
+            Color c = leftEye.color;
             c.a = alpha;
-            leftSR.color = c;
+            leftEye.color = c;
         }
 
-        if (rightSR)
+        if (rightEye)
         {
-            Color c = rightSR.color;
+            Color c = rightEye.color;
             c.a = alpha;
-            rightSR.color = c;
+            rightEye.color = c;
         }
     }
 }

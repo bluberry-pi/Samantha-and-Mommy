@@ -33,16 +33,19 @@ public class DownloadSpeedIncreaseInstances : MonoBehaviour
         }
         else
         {
-            // If not vertical, shake bonus decays
+            // Decay shake if not vertical
             shakeBoost = Mathf.Max(0f, shakeBoost - Time.deltaTime * decaySpeed);
         }
 
+        // 🔥 Only this script controls shake/vertical boost
         downloadManager.shakeBoost = totalBoost;
     }
+
     float GetVerticalBonus()
     {
         return verticalBaseBoost;
     }
+
     float GetShakeBonus()
     {
         float currentY = transform.position.y;

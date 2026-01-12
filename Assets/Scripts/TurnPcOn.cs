@@ -5,15 +5,27 @@ public class TurnPcOn : MonoBehaviour
     public GameObject OnButton;
     public GameObject PcLight;
     public GameObject PcScreen;
-    public static bool pcPowered = false;
-    public static bool PcIsOn = false;
 
+    // These can still be static if other scripts need to read them
+    public static bool pcPowered;
+    public static bool PcIsOn;
 
-    bool enteredOnce = false;
-    bool turnedPc = false;
+    bool enteredOnce;
+    bool turnedPc;
+
+    // 🔥 This runs even before Start – perfect place to reset statics
+    void Awake()
+    {
+        pcPowered = false;
+        PcIsOn = false;
+    }
 
     void Start()
     {
+        // Reset internal state every run
+        enteredOnce = false;
+        turnedPc = false;
+
         PcLight.SetActive(false);
         PcScreen.SetActive(false);
         OnButton.SetActive(false);
@@ -28,6 +40,7 @@ public class TurnPcOn : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
+        // If teddy is blocking the PC
         if (TeddyPickup.teddyOnPc)
         {
             OnButton.SetActive(false);
@@ -35,6 +48,7 @@ public class TurnPcOn : MonoBehaviour
             return;
         }
 
+        // Show correct UI depending on PC state
         if (turnedPc)
             PcScreen.SetActive(true);
         else

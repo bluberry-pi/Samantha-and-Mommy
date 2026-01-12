@@ -9,7 +9,7 @@ public class TeddyPickup : MonoBehaviour
 
     public Collider2D bedZone;
     public Collider2D desktopZone;
-    public static bool teddyOnPc = false;
+    public static bool teddyOnPc;
     public GameObject eToPickup;
 
     bool playerNearBed;
@@ -18,9 +18,21 @@ public class TeddyPickup : MonoBehaviour
 
     Collider2D playerCol;
 
+    // 🔥 Reset ALL static + internal states on reload
+    void Awake()
+    {
+        teddyOnPc = false;
+        holdingTeddy = false;
+    }
+
     void Start()
     {
         playerCol = GetComponent<Collider2D>();
+
+        // Visual hard reset
+        Teddy.enabled = true;
+        TeddyOnHand.SetActive(false);
+        TeddyOnPc.SetActive(false);
     }
 
     void Update()
@@ -30,50 +42,38 @@ public class TeddyPickup : MonoBehaviour
         playerNearBed = bedZone.IsTouching(playerCol);
         playerNearDesktop = desktopZone.IsTouching(playerCol);
 
-        if (playerNearBed)
-        {
-            eToPickup.SetActive(true);
-        } else {
-            eToPickup.SetActive(false);
-        }
+        eToPickup.SetActive(playerNearBed);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // PICK TEDDY FROM BED
+            // PICK FROM BED
             if (!holdingTeddy && playerNearBed && Teddy.enabled)
             {
-                Debug.Log("ACTION: Pick Teddy From Bed");
                 Teddy.enabled = false;
                 TeddyOnHand.SetActive(true);
                 TeddyOnPc.SetActive(false);
                 holdingTeddy = true;
             }
-
-            //DROP TEDDY ON BED
-            else if (holdingTeddy && playerNearBed && !Teddy.enabled)
+            // DROP ON BED
+            else if (holdingTeddy && playerNearBed)
             {
-                Debug.Log("ACTION: Drop Teddy On Bed");
                 Teddy.enabled = true;
                 TeddyOnHand.SetActive(false);
                 TeddyOnPc.SetActive(false);
                 holdingTeddy = false;
             }
-
-            //PUT TEDDY ON PC
+            // PUT ON PC
             else if (holdingTeddy && playerNearDesktop && !TeddyOnPc.activeSelf)
             {
-                Debug.Log("ACTION: Put Teddy On PC");
                 Teddy.enabled = false;
                 TeddyOnHand.SetActive(false);
                 TeddyOnPc.SetActive(true);
                 holdingTeddy = false;
                 teddyOnPc = true;
             }
-
-            //TAKE TEDDY FROM PC
+            // TAKE FROM PC
             else if (!holdingTeddy && playerNearDesktop && TeddyOnPc.activeSelf)
             {
-                Debug.Log("ACTION: Take Teddy From PC");
                 Teddy.enabled = false;
                 TeddyOnHand.SetActive(true);
                 TeddyOnPc.SetActive(false);

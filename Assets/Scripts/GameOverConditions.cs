@@ -25,7 +25,7 @@ public class GameOverConditions : MonoBehaviour
             return false;
         }
 
-        if (sleep.sleeping && (!eyes.leftEye.activeSelf || !eyes.rightEye.activeSelf))
+        if (sleep.sleeping && !eyes.AreEyesClosed())
         {
             Debug.Log("why are u awake samantha");
             StartCoroutine(WhyEyesOpenSequence());
