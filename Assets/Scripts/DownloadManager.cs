@@ -23,14 +23,36 @@ public class DownloadManager : MonoBehaviour
     public static event Action OnDownloadComplete;
     public static bool DownloadFinished = false;
 
+    // FIX: Only reset on first Start, not every time it's enabled
+    void Start()
+    {
+        // Only reset if not already completed
+        if (!DownloadFinished)
+        {
+            completed = false;
+            currentProgress = 0f;
+
+            if (downloadSlider)
+                downloadSlider.value = 0f;
+        }
+        else
+        {
+            // If already finished, show completed state
+            completed = true;
+            currentProgress = 1f;
+            if (downloadSlider) downloadSlider.value = 1f;
+            if (speedText) speedText.text = "Download Complete";
+        }
+    }
+
+    // FIX: Update UI when re-enabled to show current progress
     void OnEnable()
     {
-        DownloadFinished = false;
-        completed = false;
-        currentProgress = 0f;
-
         if (downloadSlider)
-            downloadSlider.value = 0f;
+            downloadSlider.value = currentProgress;
+        
+        if (speedText && completed)
+            speedText.text = "Download Complete";
     }
 
     void Update()
@@ -65,5 +87,18 @@ public class DownloadManager : MonoBehaviour
 
         Debug.Log("🔥 DOWNLOAD COMPLETE");
         OnDownloadComplete?.Invoke();
+    }
+
+    // FIX: Add method to manually reset if needed (e.g., new game)
+    public void ResetDownload()
+    {
+        DownloadFinished = false;
+        completed = false;
+        currentProgress = 0f;
+
+        if (downloadSlider)
+            downloadSlider.value = 0f;
+        if (speedText)
+            speedText.text = "0.00 kb/s";
     }
 }
