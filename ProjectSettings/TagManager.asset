@@ -29,14 +29,14 @@ TagManager:
   - EyesOverlay
   - WorldBounds
   - MiniPlayer
-  - 
+  - MiniBounds
   - MiniGameBg
   - 
   - Bed
   - 
   - Obstacle
   - 
-  - 
+  - Player
   - 
   - 
   - 

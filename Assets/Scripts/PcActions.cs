@@ -18,6 +18,7 @@ public class PcActions : MonoBehaviour
 
     public GameObject miniGame;
     public GameObject PictureFolder;
+    public Transform miniGameParent;
     Button proceedBtn;
 
     GameObject updateInstance;
@@ -117,8 +118,18 @@ public class PcActions : MonoBehaviour
     public void OnMiniGamePress()
     {
         if (currentMiniGame != null) return;
-        currentMiniGame = Instantiate(miniGame);
+
+        currentMiniGame = Instantiate(
+            miniGame,
+            miniGameParent,
+            false
+        );
+
+        currentMiniGame.transform.localPosition = Vector3.zero;
+        currentMiniGame.transform.localRotation = Quaternion.identity;
+        currentMiniGame.transform.localScale = Vector3.one;
     }
+
 
     public void OnFolderPress()
     {

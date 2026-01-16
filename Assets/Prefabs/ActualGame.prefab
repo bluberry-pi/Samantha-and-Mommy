@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831017481401061177}
   - component: {fileID: 7807406822357802300}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: TopCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1403173536855839827}
   - component: {fileID: 2126735055427363922}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1513464526356286958}
   - component: {fileID: 2571026941089270462}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: MiniGameWindowMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8854642494075314854}
   - component: {fileID: 3095940944646890250}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RightCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 1702642289041275367}
   - component: {fileID: 4070764333297055728}
   - component: {fileID: 9061149698493675061}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 2865129293321831951}
   - component: {fileID: 496366872870804889}
   - component: {fileID: 5697612305340704807}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7268036878568403627}
   - component: {fileID: 2150964030719639546}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LeftCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -969,7 +969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8867774312755440482}
   - component: {fileID: 4665794719297140069}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: BottomCilllider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,6 +1048,10 @@ PrefabInstance:
     - target: {fileID: 2745925817734585525, guid: 0425e993c86e1e842808cedf85e943c4, type: 3}
       propertyPath: m_Name
       value: Cross
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745925817734585525, guid: 0425e993c86e1e842808cedf85e943c4, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5082515494407267527, guid: 0425e993c86e1e842808cedf85e943c4, type: 3}
       propertyPath: m_LocalPosition.x

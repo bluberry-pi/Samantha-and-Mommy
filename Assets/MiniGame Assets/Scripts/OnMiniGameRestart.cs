@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class OnMiniGameRestart : MonoBehaviour
 {
@@ -9,48 +10,43 @@ public class OnMiniGameRestart : MonoBehaviour
     [Header("UI")]
     public GameObject gameOverUI;
 
-    bool hasSpawned = false;
-
-    void Start()
-    {
-        // Only allow initial spawn ONCE per scene load
-        if (!hasSpawned)
-        {
-            hasSpawned = true;
-            SpawnNew();
-        }
-    }
+    private bool isRestarting = false;
 
     public void OnRestartPress()
     {
-        // Hide Game Over UI
+        if (isRestarting) return;
+        isRestarting = true;
+
+        // IMPORTANT: start coroutine while object is still active
+        StartCoroutine(RestartRoutine());
+    }
+
+    IEnumerator RestartRoutine()
+    {
+        // Hide Game Over UI AFTER coroutine has started
         if (gameOverUI)
             gameOverUI.SetActive(false);
 
-        // Destroy current minigame if one exists
-        GameObject old = GameObject.FindGameObjectWithTag("MiniGame");
-        if (old)
-            Destroy(old);
+        // Destroy ALL existing minigames
+        GameObject[] existing = GameObject.FindGameObjectsWithTag("MiniGame");
+        foreach (GameObject g in existing)
+            Destroy(g);
 
-        // Small delay so Unity fully clears old objects
-        Invoke(nameof(SpawnNew), 0.05f);
-    }
+        // Wait one frame so Unity actually destroys them
+        yield return null;
 
-    void SpawnNew()
-    {
-        // 🛑 EXTRA SAFETY:
-        // Prevents ANY double-spawn if Unity tries something weird
-        if (GameObject.FindGameObjectWithTag("MiniGame"))
-        {
-            Debug.Log("⚠️ MiniGame already exists — spawn blocked");
-            return;
-        }
+        // Spawn EXACTLY one minigame
+        GameObject current = Instantiate(
+            miniGamePrefab,
+            miniGameParent,
+            false
+        );
 
-        GameObject currentInstance = Instantiate(miniGamePrefab, miniGameParent);
-        currentInstance.transform.localPosition = Vector3.zero;
-        currentInstance.transform.localRotation = Quaternion.identity;
-        currentInstance.transform.localScale = Vector3.one;
+        // Reset local transform
+        current.transform.localPosition = Vector3.zero;
+        current.transform.localRotation = Quaternion.identity;
+        current.transform.localScale = Vector3.one;
 
-        Debug.Log("🎮 New MiniGame spawned safely");
+        isRestarting = false;
     }
 }
